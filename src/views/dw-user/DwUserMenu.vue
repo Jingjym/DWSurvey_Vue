@@ -13,6 +13,10 @@
       <i class="el-icon-key"></i>
       <span slot="title">修改密码</span>
     </el-menu-item>
+    <el-menu-item index="/dw/user/change-info">
+      <i class="el-icon-key"></i>
+      <span slot="title">修改个人信息</span>
+    </el-menu-item>
   </el-menu>
 </template>
 

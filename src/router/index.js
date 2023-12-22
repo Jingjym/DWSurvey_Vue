@@ -19,6 +19,7 @@ import AdminUserList from '@/views/dw-admin/AdminUserList'
 import Login from '@/views/Login'
 import DwUserRegister from '@/views/dw-user/DwUserRegister'
 import DwUserAnswer from '@/views/dw-user/DwUserAnswer'
+import DwUserChangeInfo from '@/views/dw-user/DwUserChangeInfo'
 
 Vue.use(Router)
 
@@ -92,6 +93,11 @@ export default new Router({
           path: '/dw/answerSurvey',
           name: 'DwUserAnswer',
           component: DwUserAnswer
+        },
+        {
+          path: '/dw/user/change-info',
+          name: 'DwUserChangeInfo',
+          component: DwUserChangeInfo
         }
       ]
     },
