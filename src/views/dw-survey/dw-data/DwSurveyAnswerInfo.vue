@@ -32,6 +32,13 @@
                 </template>
                 {{ survey.surveyAnswer.id }}
               </el-descriptions-item>
+              <el-descriptions-item>
+                <template slot="label">
+                  <i class="el-icon-coordinate"></i> 作答者
+                </template>
+                <!-- TODO: get userName -->
+                {{ survey.surveyAnswer.userId }}
+              </el-descriptions-item>
             </el-descriptions>
             <div class="dw-answer-title" style="padding-top: 30px;padding-bottom: 0px;">答卷结果信息</div>
             <div style="padding: 0px 20px 30px 20px;">
