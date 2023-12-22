@@ -17,6 +17,7 @@ import DwUser from '@/views/dw-user/DwUser'
 import DwUserPwd from '@/views/dw-user/DwUserPwd'
 import AdminUserList from '@/views/dw-admin/AdminUserList'
 import Login from '@/views/Login'
+import DwUserRegister from '@/views/dw-user/DwUserRegister'
 
 Vue.use(Router)
 
@@ -114,6 +115,11 @@ export default new Router({
           path: '/',
           name: 'Login',
           component: Login
+        },
+        {
+          path: '/login/register',
+          name: 'DwUserRegister',
+          component: DwUserRegister
         }
       ]
     }

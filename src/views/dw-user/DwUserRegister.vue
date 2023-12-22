@@ -4,7 +4,7 @@
       <el-col :span="10" :offset="7">
         <div class="loginFormContent" >
           <div style="text-align: center;">
-            <h3>欢迎登录</h3>
+            <h3>欢迎注册</h3>
             <div>
               <el-tag type="success">调问</el-tag>
               <el-tag type="warning">专业</el-tag>
@@ -16,16 +16,22 @@
           <div>
             <el-form ref="ruleForm" :model="ruleForm" :rules="rules" status-icon label-position="top" label-width="100px" class="demo-ruleForm" @submit.native.prevent >
               <el-form-item label="用户名" prop="email">
-                <el-input v-model="ruleForm.email" autocomplete="on" ></el-input>
+                <el-input v-model="ruleForm.email" autocomplete="off" ></el-input>
               </el-form-item>
               <el-form-item label="密码" prop="pass">
                 <el-input v-model="ruleForm.pass" type="password" autocomplete="off" show-password ></el-input>
               </el-form-item>
-              <el-form-item>
-                <el-button type="primary" native-type="submit" style="width: 100%;" @click="submitForm('ruleForm')" >登录</el-button>
+              <el-form-item label="确认密码" prop="checkPass">
+                <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" show-password ></el-input>
+              </el-form-item>
+              <el-form-item label="出生年月" prop="birth">
+                <el-input v-model="ruleForm.birth" type="date" autocomplete="off" ></el-input>
+              </el-form-item>
+              <el-form-item label="性别" prop="sex">
+                <el-input v-model="ruleForm.sex" type="string" autocomplete="off" ></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" native-type="submit" style="width: 100%;" @click="register()">注册</el-button>
+                <el-button type="primary" native-type="submit" style="width: 100%;" @click="register('ruleForm')">确认注册</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -35,26 +41,49 @@
   </div>
 </template>
 <script>
-import DwAuthorized from '../utils/dw-authorized'
-import {msgError} from '../utils/dw-msg'
-import {dwLogin} from '@/api/dw-login'
+import DwAuthorized from '../../utils/dw-authorized'
+import {msgError} from '../../utils/dw-msg'
+import {dwRegister} from '@/api/dw-register'
 
 export default {
-  name: 'Login',
+  name: 'Register',
   data () {
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.ruleForm.pass) {
+        callback(new Error('两次输入的密码不一致，请检查'))
+      } else {
+        callback()
+      }
+    }
     return {
       ruleForm: {
         email: '',
-        pass: ''
+        pass: '',
+        checkPass: '',
+        birth: '',
+        sex: ''
       },
       rules: {
         email: [
-          {required: true, message: '请输入登录账号', trigger: 'blur'}
-          // {type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}
+          {required: true, message: '请输入正确的邮箱作为用户名', trigger: 'blur'},
+          {type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}
         ],
         pass: [
-          {required: true, message: '请输入登录密码', trigger: 'blur'},
+          {required: true, message: '请输入密码', trigger: 'blur'},
           {min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur'}
+        ],
+        checkPass: [
+          {required: true, validator: validatePass, trigger: 'blur'},
+          {min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur'}
+        ],
+        sex: [
+          {required: true, message: '请填写性别', trigger: 'blur'},
+          {type: 'enum', enum: ['男', '女']}
+        ],
+        birth: [
+          {required: true, message: '请输入生日', trigger: 'blur'}
         ]
       }
     }
@@ -63,11 +92,10 @@ export default {
     this.pageH = window.height
   },
   methods: {
-    submitForm (formName) {
-      // 进行登录验证
+    register (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          dwLogin(this.ruleForm.email, this.ruleForm.pass).then((response) => {
+          dwRegister(this.ruleForm.email, this.ruleForm.pass, this.ruleForm.birth, this.ruleForm.sex).then((response) => {
             const resultData = response.data
             console.log('login-begin')
             console.log(resultData)
@@ -79,7 +107,7 @@ export default {
               if (resultData.hasOwnProperty('httpResult') && resultData.httpResult != null && resultData.httpResult.hasOwnProperty('resultMsg')) {
                 msgError(resultData.httpResult.resultMsg)
               } else {
-                msgError('登录失败，请确认！')
+                msgError('注册失败，请确认！')
               }
             }
           })
@@ -88,20 +116,15 @@ export default {
           return false
         }
       })
-    },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
-    },
-    register () {
-      this.$router.push('/login/register')
     }
   }
 }
+
 </script>
 
 <style scoped>
 #loginPage {
-  /*background-image: url("http://localhost:8181/diaowen/images/style-model/login_bg/1.jpg");*/
+    /*background-image: url("http://localhost:8181/diaowen/images/style-model/login_bg/1.jpg");*/
 }
 
 .loginFormContent {
@@ -110,4 +133,5 @@ export default {
   background-color: white;
   border: 1px solid gainsboro;
   border-radius: 3px;
-}</style>
+}
+</style>

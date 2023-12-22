@@ -20,7 +20,7 @@
               <el-col :span="4" style="text-align: right;" >
                 <div>
                   <div style="height: 80px;line-height: 80px;">
-                    <el-button type="primary">登录</el-button>
+                    <el-button type="primary" @click="dwLogin()">登录</el-button>
                   </div>
                 </div>
               </el-col>
@@ -39,6 +39,11 @@ export default {
   name: 'DwHeaderLogin',
   components: {
     'dw-nav-menu': DwNavMenu
+  },
+  methods: {
+    dwLogin () {
+      this.$router.push('/login')
+    }
   }
 }
 </script>
