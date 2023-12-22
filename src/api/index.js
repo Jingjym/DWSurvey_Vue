@@ -2,7 +2,7 @@ export default {
   /**  账号密码登录登出  **/
   loginIn: `/api/dwsurvey/anon/security/login-pwd.do`,
   logOut: `/api/dwsurvey/anon/security/logout.do`,
-  registerAccount: '/api/', // TODO
+  registerAccount: '/api/dwsurvey/anon/security/register.do', // TODO
   /** 问卷数据  **/
   surveyList: `/api/dwsurvey/app/survey/list.do`,
   surveyInfo: `/api/dwsurvey/app/survey/info.do`,
@@ -13,6 +13,7 @@ export default {
   surveyDelete: `/api/dwsurvey/app/survey/delete.do`,
   surveyReport: `/api/dwsurvey/app/stats/report.do`,
   surveyAnswerList: `/api/dwsurvey/app/answer/list.do`,
+  surveyAnsweredList: '/api/dwsurvey/app/answer/answered-list.do', // TODO
   surveyAnswerInfo: `/api/dwsurvey/app/answer/info.do`,
   surveyAnswerExport: `/api/dwsurvey/app/answer/export-xls.do`,
   surveyAnswerDelete: `/api/dwsurvey/app/answer/delete.do`,

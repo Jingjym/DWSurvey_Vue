@@ -9,6 +9,7 @@
     router
     @select="handleSelect">
     <el-menu-item index="/dw/survey" >我的问卷</el-menu-item>
+    <el-menu-item index="/dw/answerSurvey" >我的答卷</el-menu-item>
     <el-menu-item index="/dw/user" >个人中心</el-menu-item>
     <el-menu-item v-has-dw-role="'DWSURVEY_SUPER_ADMIN'" index="/dw/admin/user" >用户管理</el-menu-item>
   </el-menu>

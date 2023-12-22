@@ -8,6 +8,9 @@ function changeHasRole (el, binding) {
   }
   function roleCheck (value) {
     const authority = DwAuthorized.getAuthority()
+    if (authority == null) {
+      return false
+    }
     for (let i=0; i<authority.length; i++) {
       if (value === authority[i]) {
         return true
