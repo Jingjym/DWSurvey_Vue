@@ -27,6 +27,8 @@
                   <el-descriptions-item label="登录时间">{{ userInfo.lastLoginTime }}</el-descriptions-item>
                   <el-descriptions-item label="生日">{{ userInfo.birth }}</el-descriptions-item>
                   <el-descriptions-item label="性别">{{ userInfo.sex === 0 ? '男' : '女' }}</el-descriptions-item>
+                  <el-descriptions-item label="邮箱">{{ userInfo.email }}</el-descriptions-item>
+                  <el-descriptions-item label="电话">{{ userInfo.cellphone }}</el-descriptions-item>
                 </el-descriptions>
               </div>
             </el-col>

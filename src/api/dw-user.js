@@ -23,11 +23,14 @@ export function dwUserPwd (curpwd, pwd) {
 }
 
 // 修改用户信息
-export function dwUserInfoUpdate (email, sex, birth) {
+export function dwUserInfoUpdate (userName, birth, sex, email, phone) {
   const params = {
-    email,
+    userName,
+    birth,
     sex,
-    birth
+    email,
+    phone,
+    type: 'account'
   }
   return request({
     url: API.curUserInfoUpdate,

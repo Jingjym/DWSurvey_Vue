@@ -15,8 +15,8 @@
           </div>
           <div>
             <el-form ref="ruleForm" :model="ruleForm" :rules="rules" status-icon label-position="top" label-width="100px" class="demo-ruleForm" @submit.native.prevent >
-              <el-form-item label="用户名" prop="email">
-                <el-input v-model="ruleForm.email" autocomplete="off" ></el-input>
+              <el-form-item label="用户名" prop="userName">
+                <el-input v-model="ruleForm.userName" autocomplete="off" ></el-input>
               </el-form-item>
               <el-form-item label="密码" prop="pass">
                 <el-input v-model="ruleForm.pass" type="password" autocomplete="off" show-password ></el-input>
@@ -29,6 +29,12 @@
               </el-form-item>
               <el-form-item label="性别" prop="sex">
                 <el-input v-model="ruleForm.sex" type="string" autocomplete="off" ></el-input>
+              </el-form-item>
+              <el-form-item label="邮箱" prop="email">
+                <el-input v-model="ruleForm.email" type="email" autocomplete="off" ></el-input>
+              </el-form-item>
+              <el-form-item label="电话" prop="sex">
+                <el-input v-model="ruleForm.phone" type="string" autocomplete="off" ></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" native-type="submit" style="width: 100%;" @click="register('ruleForm')">确认注册</el-button>
@@ -59,16 +65,18 @@ export default {
     }
     return {
       ruleForm: {
-        email: '',
+        userName: '',
         pass: '',
         checkPass: '',
         birth: '',
-        sex: ''
+        sex: '',
+        email: '',
+        phone: ''
       },
       rules: {
-        email: [
-          {required: true, message: '请输入正确的邮箱作为用户名', trigger: 'blur'},
-          {type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}
+        userName: [
+          {required: true, message: '请输入用户名', trigger: 'blur'},
+          {min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur'}
         ],
         pass: [
           {required: true, message: '请输入密码', trigger: 'blur'},
@@ -83,7 +91,16 @@ export default {
           {type: 'enum', enum: ['男', '女']}
         ],
         birth: [
-          {required: true, message: '请输入生日', trigger: 'blur'}
+          {required: true, message: '请输入生日', trigger: 'blur'},
+          {type: 'date', message: '请输入正确格式的日期', trigger: 'blur'}
+        ],
+        email: [
+          {required: true, message: '请输入正确的邮箱作为用户名', trigger: 'blur'},
+          {type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}
+        ],
+        phone: [
+          {required: true, message: '请输入电话号码', trigger: 'blur'},
+          {min: 11, max: 11, message: '请输入正确长度的电话号码', trigger: 'blur'}
         ]
       }
     }
@@ -95,13 +112,13 @@ export default {
     register (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          dwRegister(this.ruleForm.email, this.ruleForm.pass, this.ruleForm.birth, this.ruleForm.sex).then((response) => {
+          dwRegister(this.ruleForm.userName, this.ruleForm.pass, this.ruleForm.birth, this.ruleForm.sex, this.ruleForm.email, this.ruleForm.phone).then((response) => {
             const resultData = response.data
             console.log('login-begin')
             console.log(resultData)
             if (resultData.status === 'ok') {
               DwAuthorized.setAuthority(resultData.currentAuthority)
-              DwAuthorized.setUserName(this.ruleForm.email)
+              DwAuthorized.setUserName(this.ruleForm.userName)
               this.$router.push('/dw/survey/')
             } else {
               if (resultData.hasOwnProperty('httpResult') && resultData.httpResult != null && resultData.httpResult.hasOwnProperty('resultMsg')) {
