@@ -11,10 +11,10 @@
               <div style="padding: 30px;width: 400px;">
                 <el-form ref="ruleForm" :model="ruleForm" :rules="rules" status-icon label-width="100px" label-position="top">
                   <el-form-item label="用户名" prop="userName">
-                    <el-input v-model="ruleForm.userName" autocomplete="off" ></el-input>
+                    <el-input v-model="ruleForm.userName" autocomplete="off" readonly="true"></el-input>
                   </el-form-item>
                   <el-form-item label="出生年月" prop="birth">
-                    <el-input v-model="ruleForm.birth" type="date" autocomplete="off" ></el-input>
+                    <el-date-picker v-model="ruleForm.birth" type="date" placeholder="请选择出生年月"></el-date-picker>
                   </el-form-item>
                   <el-form-item label="性别" prop="sex">
                     <el-input v-model="ruleForm.sex" type="string" autocomplete="off" ></el-input>
@@ -42,7 +42,7 @@
 <script>
 
 import DwUserMenu from './DwUserMenu'
-import {dwUserInfoUpdate} from '../../api/dw-user'
+import {dwUserInfoUpdate, dwUserInfo} from '../../api/dw-user'
 export default {
   name: 'DwUserPwd',
   components: {
@@ -50,6 +50,7 @@ export default {
   },
   data () {
     return {
+      userInfo: {},
       ruleForm: {
         userName: '',
         birth: '',
@@ -67,7 +68,8 @@ export default {
           {type: 'enum', enum: ['男', '女']}
         ],
         birth: [
-          {required: true, message: '请输入生日', trigger: 'blur'}
+          {required: true, message: '请输入生日', trigger: 'blur'},
+          {type: 'date', format: 'yyyy-MM-dd', message: '请输入正确格式的日期', trigger: 'blur'}
         ],
         email: [
           {required: true, message: '请输入正确的邮箱作为用户名', trigger: 'blur'},
@@ -81,9 +83,20 @@ export default {
     }
   },
   mounted () {
-
+    this.getUserInfo()
   },
   methods: {
+    getUserInfo () {
+      dwUserInfo().then((response) => {
+        const resultData = response.data.data
+        this.userInfo = resultData
+        this.ruleForm.phone = this.userInfo.cellphone
+        this.ruleForm.sex = this.userInfo.sex === 0 ? '男' : '女'
+        this.ruleForm.birth = this.userInfo.birthday.split(' ')[0]
+        this.ruleForm.email = this.userInfo.email
+        this.ruleForm.userName = this.userInfo.loginName
+      })
+    },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {

@@ -34,10 +34,10 @@
             <el-table-column label="问卷" >
               <template slot-scope="scope">
                 <el-popover trigger="hover" placement="top">
-                  <p v-html="scope.row.surveyName" ></p>
+                  <p v-html="scope.row.surveyDirectory.surveyName" ></p>
                   <div slot="reference" class="name-wrapper">
-                    <div v-if="scope.row.surveyNameText != null" v-text="scope.row.surveyNameText"></div>
-                    <div v-else v-html="scope.row.surveyName"></div>
+                    <div v-if="scope.row.surveyDirectory.surveyNameText != null" v-text="scope.row.surveyDirectory.surveyNameText"></div>
+                    <div v-else v-html="scope.row.surveyDirectory.surveyName"></div>
                   </div>
                 </el-popover>
               </template>
@@ -45,13 +45,13 @@
             <el-table-column label="发布者" >
               <template slot-scope="scope">
                 <!-- TODO: use userName -->
-                <span style="margin-left: 10px">{{ scope.row.userId }}</span>
+                <span style="margin-left: 10px">{{ scope.row.surveyDirectory.userName }}</span>
               </template>
             </el-table-column>
             <el-table-column label="状态" width="80" >
               <template slot-scope="scope">
-                <el-tag v-if="scope.row.surveyState === 1" type="success" >收集中</el-tag>
-                <el-tag v-else-if="scope.row.surveyState === 2" type="info" >收集结束</el-tag>
+                <el-tag v-if="scope.row.surveyDirectory.surveyState === 1" type="success" >收集中</el-tag>
+                <el-tag v-else-if="scope.row.surveyDirectory.surveyState === 2" type="info" >收集结束</el-tag>
                 <el-tag v-else disable-transitions style="margin-left: 10px" >未知</el-tag>
               </template>
             </el-table-column>
@@ -68,7 +68,7 @@
                     <el-button size="mini" icon="el-icon-view" @click="handleGo(`/no-top/dw-survey/d/data/${scope.row.surveyId}/${scope.row.id}`)"></el-button>
                   </el-tooltip>
                   <el-tooltip effect="dark" content="问卷地址" placement="top">
-                    <el-button size="mini" icon="el-icon-share" @click="handlePush(`/dw/survey/c/url/${scope.row.id}`)"></el-button>
+                    <el-button size="mini" icon="el-icon-share" @click="handlePush(`/diaowen/${scope.row.surveyDirectory.sid}`)"></el-button>
                   </el-tooltip>
                   <el-tooltip effect="dark" content="复制问卷" placement="top">
                     <el-button size="mini" icon="el-icon-copy-document" @click="handleCopy(scope.$index, scope.row)"></el-button>
@@ -143,6 +143,9 @@ export default {
     this.queryList(1)
   },
   methods: {
+    handleGo (to) {
+      this.$router.push(to)
+    },
     handlePush: function (to) {
       this.$router.push(to)
     },

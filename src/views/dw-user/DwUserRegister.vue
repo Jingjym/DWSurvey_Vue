@@ -16,25 +16,25 @@
           <div>
             <el-form ref="ruleForm" :model="ruleForm" :rules="rules" status-icon label-position="top" label-width="100px" class="demo-ruleForm" @submit.native.prevent >
               <el-form-item label="用户名" prop="userName">
-                <el-input v-model="ruleForm.userName" autocomplete="off" ></el-input>
+                <el-input v-model="ruleForm.userName" placeholder="请设置登录账号" autocomplete="off" ></el-input>
               </el-form-item>
               <el-form-item label="密码" prop="pass">
-                <el-input v-model="ruleForm.pass" type="password" autocomplete="off" show-password ></el-input>
+                <el-input v-model="ruleForm.pass" type="password" placeholder="请设置登录密码" autocomplete="off" show-password ></el-input>
               </el-form-item>
               <el-form-item label="确认密码" prop="checkPass">
-                <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" show-password ></el-input>
+                <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" placeholder="重新输入密码确认密码无误" show-password ></el-input>
               </el-form-item>
               <el-form-item label="出生年月" prop="birth">
-                <el-input v-model="ruleForm.birth" type="date" autocomplete="off" ></el-input>
+                <el-date-picker v-model="ruleForm.birth" type="date" placeholder="请选择出生年月"></el-date-picker>
               </el-form-item>
               <el-form-item label="性别" prop="sex">
-                <el-input v-model="ruleForm.sex" type="string" autocomplete="off" ></el-input>
+                <el-input v-model="ruleForm.sex" type="string" placeholder="仅可填「男」或「女」" autocomplete="off" ></el-input>
               </el-form-item>
               <el-form-item label="邮箱" prop="email">
-                <el-input v-model="ruleForm.email" type="email" autocomplete="off" ></el-input>
+                <el-input v-model="ruleForm.email" type="email" placeholder="请填入未注册过的邮箱" autocomplete="off" ></el-input>
               </el-form-item>
-              <el-form-item label="电话" prop="sex">
-                <el-input v-model="ruleForm.phone" type="string" autocomplete="off" ></el-input>
+              <el-form-item label="电话" prop="phone">
+                <el-input v-model="ruleForm.phone" type="string" placeholder="请输入您的电话号码" autocomplete="off" ></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" native-type="submit" style="width: 100%;" @click="register('ruleForm')">确认注册</el-button>
@@ -92,7 +92,7 @@ export default {
         ],
         birth: [
           {required: true, message: '请输入生日', trigger: 'blur'},
-          {type: 'date', message: '请输入正确格式的日期', trigger: 'blur'}
+          {type: 'date', format: 'yyyy-MM-dd', message: '请输入正确格式的日期', trigger: 'blur'}
         ],
         email: [
           {required: true, message: '请输入正确的邮箱作为用户名', trigger: 'blur'},

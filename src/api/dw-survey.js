@@ -26,12 +26,10 @@ export function dwSurveyList (pageSize, current, surveyName, surveyState) {
  * @param current
  * @returns {*}
  */
-export function dwAnswerList (pageSize, current, surveyName, surveyState) {
+export function dwAnswerList (pageSize, current) {
   const params = {
     pageSize,
-    current,
-    surveyName,
-    surveyState
+    current
   }
   return request({
     url: API.surveyAnsweredList,
