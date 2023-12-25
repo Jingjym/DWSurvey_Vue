@@ -271,7 +271,7 @@ export default {
           let sex = 0 // 默认值，假设是男性
           if (this.userForm.sex === '女') {
             sex = 1 // 如果是女性，设置为1
-          }else{
+          } else {
             sex = 0
           }
           if (id === null) {

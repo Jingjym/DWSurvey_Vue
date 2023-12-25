@@ -9,6 +9,17 @@ export function dwUserInfo () {
   })
 }
 
+export function dwAnswerUserInfo (id) {
+  const params = {
+    id
+  }
+  return request({
+    url: API.surveyAnswerUserInfo,
+    method: 'post',
+    params
+  })
+}
+
 // 退出方法
 export function dwUserPwd (curpwd, pwd) {
   const params = {

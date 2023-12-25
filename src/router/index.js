@@ -20,6 +20,7 @@ import Login from '@/views/Login'
 import DwUserRegister from '@/views/dw-user/DwUserRegister'
 import DwUserAnswer from '@/views/dw-user/DwUserAnswer'
 import DwUserChangeInfo from '@/views/dw-user/DwUserChangeInfo'
+import DwSurveyAvoid from '@/views/dw-survey/dw-data/DwSurveyAvoid'
 
 Vue.use(Router)
 
@@ -134,6 +135,11 @@ export default new Router({
           component: DwUserRegister
         }
       ]
+    },
+    {
+      path: '/avoid',
+      name: 'DwSurveyAvoid',
+      component: DwSurveyAvoid
     }
   ]
 })

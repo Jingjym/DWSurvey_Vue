@@ -44,7 +44,7 @@
 import DwUserMenu from './DwUserMenu'
 import {dwUserInfoUpdate, dwUserInfo} from '../../api/dw-user'
 export default {
-  name: 'DwUserPwd',
+  name: 'DwUserChangeInfo',
   components: {
     DwUserMenu
   },

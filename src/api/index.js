@@ -15,6 +15,7 @@ export default {
   surveyAnswerList: `/api/dwsurvey/app/answer/list.do`,
   surveyAnsweredList: `/api/dwsurvey/app/answer/answered-list.do`, // TODO
   surveyAnswerInfo: `/api/dwsurvey/app/answer/info.do`,
+  surveyAnswerUserInfo: `/api/dwsurvey/app/answer/user-info.do`,
   surveyAnswerExport: `/api/dwsurvey/app/answer/export-xls.do`,
   surveyAnswerDelete: `/api/dwsurvey/app/answer/delete.do`,
   surveyFooterInfo: `/api/dwsurvey/anon/web/footer-info.do`,
@@ -25,4 +26,5 @@ export default {
   curUserInfo: `/api/dwsurvey/app/user/currentUser.do`,
   curUserPwdUpdate: `/api/dwsurvey/app/user/up-pwd.do`,
   curUserInfoUpdate: `/api/dwsurvey/app/user/up-info.do`
+
 }
