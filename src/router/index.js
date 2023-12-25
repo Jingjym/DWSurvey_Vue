@@ -17,6 +17,10 @@ import DwUser from '@/views/dw-user/DwUser'
 import DwUserPwd from '@/views/dw-user/DwUserPwd'
 import AdminUserList from '@/views/dw-admin/AdminUserList'
 import Login from '@/views/Login'
+import DwUserRegister from '@/views/dw-user/DwUserRegister'
+import DwUserAnswer from '@/views/dw-user/DwUserAnswer'
+import DwUserChangeInfo from '@/views/dw-user/DwUserChangeInfo'
+import DwSurveyAvoid from '@/views/dw-survey/dw-data/DwSurveyAvoid'
 
 Vue.use(Router)
 
@@ -85,6 +89,16 @@ export default new Router({
           path: '/dw/admin/user',
           name: 'AdminUserList',
           component: AdminUserList
+        },
+        {
+          path: '/dw/answerSurvey',
+          name: 'DwUserAnswer',
+          component: DwUserAnswer
+        },
+        {
+          path: '/dw/user/change-info',
+          name: 'DwUserChangeInfo',
+          component: DwUserChangeInfo
         }
       ]
     },
@@ -114,8 +128,18 @@ export default new Router({
           path: '/',
           name: 'Login',
           component: Login
+        },
+        {
+          path: '/login/register',
+          name: 'DwUserRegister',
+          component: DwUserRegister
         }
       ]
+    },
+    {
+      path: '/avoid',
+      name: 'DwSurveyAvoid',
+      component: DwSurveyAvoid
     }
   ]
 })
