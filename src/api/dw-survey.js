@@ -21,6 +21,23 @@ export function dwSurveyList (pageSize, current, surveyName, surveyState) {
   })
 }
 /**
+ * 答卷列表
+ * @param pageSize
+ * @param current
+ * @returns {*}
+ */
+export function dwAnswerList (pageSize, current) {
+  const params = {
+    pageSize,
+    current
+  }
+  return request({
+    url: API.surveyAnsweredList,
+    method: 'get',
+    params
+  })
+}
+/**
  * 创建问卷
  * @param data
  * @returns {*}
