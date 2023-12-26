@@ -28,6 +28,9 @@
                         <el-checkbox v-model="survey.surveyDetail.rule">启用访问密码，设置密码</el-checkbox>
                         <el-input v-model="survey.surveyDetail.ruleCode" placeholder="请输入内容" style="width: 160px;"></el-input>
                       </el-form-item>
+                      <el-form-item>
+                        <el-checkbox v-model="survey.surveyDetail.isRealName">实名问卷</el-checkbox>
+                      </el-form-item>
                     </div>
                   </el-col>
                   <el-col :span="12">
@@ -114,6 +117,7 @@ export default {
         this.survey.surveyDetail.endNum = resultData.surveyDetail.endNum
         this.survey.surveyDetail.ynEndTime = resultData.surveyDetail.ynEndTime === 1
         this.survey.surveyDetail.ruleCode = resultData.surveyDetail.ruleCode
+        this.survey.surveyDetail.isRealName = resultData.surveyDetail.isRealName === 1
       })
     },
     onSubmit () {
@@ -129,7 +133,8 @@ export default {
         ynEndTime: surveyDetail.ynEndTime ? 1 : 0,
         endNum: surveyDetail.endNum,
         endTime: surveyDetail.endTime,
-        ruleCode: surveyDetail.ruleCode
+        ruleCode: surveyDetail.ruleCode,
+        isRealName: surveyDetail.isRealName ? 1 : 0
       }
       console.log(data)
       dwSurveyUpdate(data).then((response) => {
