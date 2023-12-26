@@ -26,5 +26,8 @@ export default {
   curUserInfo: `/api/dwsurvey/app/user/currentUser.do`,
   curUserPwdUpdate: `/api/dwsurvey/app/user/up-pwd.do`,
   curUserInfoUpdate: `/api/dwsurvey/app/user/up-info.do`
+<<<<<<< HEAD
 
+=======
+>>>>>>> e3871a0ba01a990c3553b3c3e45b4ea785bc6d77
 }
