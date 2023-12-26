@@ -128,7 +128,7 @@ export default {
   methods: {
     getUserInfo () {
       dwAnswerUserInfo(this.survey.surveyAnswer.userId).then((response) => {
-        const resultData = response.data.data
+        const resultData = response.data
         this.userInfo = resultData
       })
     },
