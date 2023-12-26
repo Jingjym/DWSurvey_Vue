@@ -40,7 +40,7 @@ service.interceptors.response.use(
         } else if (data.resultCode !== 200) {
           let message = `异常码：${data.resultCode}`
           if (data.hasOwnProperty('resultMsg')) {
-            message = `${data.resultMsg}，异常码：${data.resultCode}`
+            message = `${data.resultMsg}`
           }
           msgError(message)
         }

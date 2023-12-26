@@ -9,7 +9,7 @@
             </el-col>
             <el-col :span="20">
               <div style="padding: 30px;">
-                <el-descriptions title="账号信息" column="1" border >
+                <el-descriptions :column="1" title="账号信息" border >
                   <el-descriptions-item label="账号">{{ userInfo.loginName }}</el-descriptions-item>
                   <el-descriptions-item label="状态">
                     <el-tag
@@ -25,6 +25,10 @@
                   </el-descriptions-item>
                   <el-descriptions-item label="创建时间">{{ userInfo.createTime }}</el-descriptions-item>
                   <el-descriptions-item label="登录时间">{{ userInfo.lastLoginTime }}</el-descriptions-item>
+                  <el-descriptions-item label="生日">{{ userInfo.birthday }}</el-descriptions-item>
+                  <el-descriptions-item label="性别">{{ userInfo.sex === 0 ? '男' : '女' }}</el-descriptions-item>
+                  <el-descriptions-item label="邮箱">{{ userInfo.email }}</el-descriptions-item>
+                  <el-descriptions-item label="电话">{{ userInfo.cellphone }}</el-descriptions-item>
                 </el-descriptions>
               </div>
             </el-col>

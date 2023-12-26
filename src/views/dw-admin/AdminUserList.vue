@@ -103,6 +103,21 @@
           <el-form-item :label-width="formLabelWidth" label="设置密码" prop="pwd" class="dw-dialog-form-item" >
             <el-input v-model="userForm.pwd" autocomplete="off" placeholder="新建时必须设置密码，修改时不设置代表不修改。" show-password ></el-input>
           </el-form-item>
+          <el-form-item label="确认密码" prop="checkPwd">
+            <el-input v-model="userForm.checkPwd" type="password" autocomplete="off" placeholder="重新输入密码确认密码无误" show-password ></el-input>
+          </el-form-item>
+          <el-form-item label="出生年月" prop="birth">
+            <el-date-picker v-model="userForm.birth" type="date" placeholder="请选择出生年月"></el-date-picker>
+          </el-form-item>
+          <el-form-item label="性别" prop="sex">
+            <el-input v-model="userForm.sex" type="string" placeholder="仅可填「男」或「女」" autocomplete="off" ></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="userForm.email" type="email" placeholder="请填入未注册过的邮箱" autocomplete="off" ></el-input>
+          </el-form-item>
+          <el-form-item label="电话" prop="phone">
+            <el-input v-model="userForm.phone" type="string" placeholder="请输入您的电话号码" autocomplete="off" ></el-input>
+          </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -121,6 +136,15 @@ import {dwAdminUserList, dwUserCreate, dwUserDelete, dwUserUpdate} from '../../a
 export default {
   name: 'AdminUserList',
   data () {
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.userForm.pwd) {
+        callback(new Error('两次输入的密码不一致，请检查'))
+      } else {
+        callback()
+      }
+    }
     return {
       tableData: [],
       pageSize: 10,
@@ -136,7 +160,12 @@ export default {
         id: null,
         loginName: '',
         pwd: '',
-        status: 2
+        checkPwd: '',
+        status: 2,
+        sex: '',
+        birth: '',
+        email: '',
+        phone: ''
       },
       userFormRules: {
         loginName: [
@@ -150,6 +179,26 @@ export default {
         ],
         status: [
           {required: true, message: '请选择账号状态', trigger: 'change'}
+        ],
+        checkPwd: [
+          {required: true, validator: validatePass, trigger: 'blur'},
+          {min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur'}
+        ],
+        sex: [
+          {required: true, message: '请填写性别', trigger: 'blur'},
+          {type: 'enum', enum: ['男', '女']}
+        ],
+        birth: [
+          {required: true, message: '请输入生日', trigger: 'blur'},
+          {type: 'date', format: 'yyyy-MM-dd', message: '请输入正确格式的日期', trigger: 'blur'}
+        ],
+        email: [
+          {required: true, message: '请输入正确的邮箱作为用户名', trigger: 'blur'},
+          {type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}
+        ],
+        phone: [
+          {required: true, message: '请输入电话号码', trigger: 'blur'},
+          {min: 11, max: 11, message: '请输入正确长度的电话号码', trigger: 'blur'}
         ]
       },
       formLabelWidth: '120px'
@@ -210,7 +259,7 @@ export default {
             this.$message.success('删除成功，即将刷新数据。')
             this.queryList(1)
           } else {
-            this.$message.error('添加用户失败')
+            this.$message.error('删除用户失败')
           }
         })
       }).catch(() => {})
@@ -218,9 +267,15 @@ export default {
     handleSaveUser () {
       this.$refs['userForm'].validate((valid) => {
         if (valid) {
-          const {id, loginName, pwd, status} = this.userForm
+          const {id, loginName, pwd, status, birth, email, phone} = this.userForm
+          let sex = 0 // 默认值，假设是男性
+          if (this.userForm.sex === '女') {
+            sex = 1 // 如果是女性，设置为1
+          } else {
+            sex = 0
+          }
           if (id === null) {
-            const data = {loginName, pwd, status}
+            const data = {loginName, pwd, status, sex, birth, email, phone}
             dwUserCreate(data).then((response) => {
               const httpResult = response.data
               if (httpResult.resultCode === 200) {
@@ -232,7 +287,7 @@ export default {
               }
             })
           } else {
-            const data = {id, loginName, pwd, status}
+            const data = {id, loginName, pwd, status, sex, birth, email, phone}
             dwUserUpdate(data).then((response) => {
               const httpResult = response.data
               if (httpResult.resultCode === 200) {

@@ -9,6 +9,17 @@ export function dwUserInfo () {
   })
 }
 
+export function dwAnswerUserInfo (id) {
+  const params = {
+    id
+  }
+  return request({
+    url: API.surveyAnswerUserInfo,
+    method: 'post',
+    params
+  })
+}
+
 // 退出方法
 export function dwUserPwd (curpwd, pwd) {
   const params = {
@@ -17,6 +28,23 @@ export function dwUserPwd (curpwd, pwd) {
   }
   return request({
     url: API.curUserPwdUpdate,
+    method: 'post',
+    params
+  })
+}
+
+// 修改用户信息
+export function dwUserInfoUpdate (userName, birth, sex, email, phone) {
+  const params = {
+    userName,
+    birth,
+    sex,
+    email,
+    phone,
+    type: 'account'
+  }
+  return request({
+    url: API.curUserInfoUpdate,
     method: 'post',
     params
   })

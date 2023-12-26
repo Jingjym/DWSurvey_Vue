@@ -32,6 +32,15 @@
                 </template>
                 {{ survey.surveyAnswer.id }}
               </el-descriptions-item>
+              <el-descriptions-item>
+                <template slot="label">
+                  <i class="el-icon-coordinate"></i> 作答者信息
+                </template>
+                <el-button v-if="userInfo !== null" style="width: 100%;" @click="getAnswerUserInfo()">点击查看详情</el-button>
+                <div v-else>
+                  匿名
+                </div>
+              </el-descriptions-item>
             </el-descriptions>
             <div class="dw-answer-title" style="padding-top: 30px;padding-bottom: 0px;">答卷结果信息</div>
             <div style="padding: 0px 20px 30px 20px;">
@@ -40,6 +49,19 @@
           </div>
         </el-col>
       </el-row>
+      <div>
+        <el-dialog v-if="userInfo !== null" :title="dialogTitle" :visible.sync="dialogFormVisible" append-to-body width="40%" >
+          <el-descriptions :column="1" border >
+            <el-descriptions-item label="账号">{{ userInfo.loginName }}</el-descriptions-item>
+            <el-descriptions-item label="生日">{{ userInfo.birthday }}</el-descriptions-item>
+            <el-descriptions-item label="性别">{{ userInfo.sex === 0 ? '男' : '女' }}</el-descriptions-item>
+            <el-descriptions-item label="邮箱">{{ userInfo.email }}</el-descriptions-item>
+            <el-descriptions-item label="电话">{{ userInfo.cellphone }}</el-descriptions-item>
+          </el-descriptions>
+          <div slot="footer" class="dialog-footer">
+          </div>
+        </el-dialog>
+      </div>
     </div>
   </div>
 </template>
@@ -48,6 +70,7 @@
 import DwSurveyDcsWrapper from '@/components/common/DwSurveyDcsWrapper'
 import DwSurveyAnswerQuCommon from './DwSurveyAnswerQuCommon'
 import {dwSurveyAnswerInfo} from '@/api/dw-survey'
+import {dwAnswerUserInfo} from '@/api/dw-user'
 
 export default {
   name: 'DwSurveyAnswerInfo',
@@ -57,10 +80,13 @@ export default {
   },
   data () {
     return {
+      userInfo: {},
       survey: {
         questions: []
       },
       tableData: [],
+      dialogTitle: '作答者信息',
+      dialogFormVisible: false,
       pageSize: 10,
       currentPage: 1,
       total: 0,
@@ -100,6 +126,12 @@ export default {
     this.querySurveyAnswer(1)
   },
   methods: {
+    getUserInfo () {
+      dwAnswerUserInfo(this.survey.surveyAnswer.userId).then((response) => {
+        const resultData = response.data.data
+        this.userInfo = resultData
+      })
+    },
     goBack () {
       this.$router.back()
     },
@@ -108,6 +140,10 @@ export default {
     },
     handleDelete (index, row) {
       console.log(index, row)
+    },
+    getAnswerUserInfo () {
+      this.dialogTitle = '作答者信息'
+      this.dialogFormVisible = true
     },
     querySurveyAnswer () {
       dwSurveyAnswerInfo(this.$route.params.answerId).then((response) => {
@@ -180,6 +216,7 @@ export default {
             }
           }
         }
+        this.getUserInfo()
       })
     },
     handleCurrentChange: function (val) {

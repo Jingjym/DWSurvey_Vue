@@ -24,6 +24,9 @@
               <el-form-item>
                 <el-button type="primary" native-type="submit" style="width: 100%;" @click="submitForm('ruleForm')" >登录</el-button>
               </el-form-item>
+              <el-form-item>
+                <el-button type="primary" native-type="submit" style="width: 100%;" @click="register()">注册</el-button>
+              </el-form-item>
             </el-form>
           </div>
         </div>
@@ -32,7 +35,6 @@
   </div>
 </template>
 <script>
-
 import DwAuthorized from '../utils/dw-authorized'
 import {msgError} from '../utils/dw-msg'
 import {dwLogin} from '@/api/dw-login'
@@ -74,7 +76,7 @@ export default {
               DwAuthorized.setUserName(this.ruleForm.email)
               this.$router.push('/dw/survey/')
             } else {
-              if (resultData.hasOwnProperty('httpResult') && resultData.httpResult!=null && resultData.httpResult.hasOwnProperty('resultMsg')) {
+              if (resultData.hasOwnProperty('httpResult') && resultData.httpResult != null && resultData.httpResult.hasOwnProperty('resultMsg')) {
                 msgError(resultData.httpResult.resultMsg)
               } else {
                 msgError('登录失败，请确认！')
@@ -89,20 +91,23 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
+    },
+    register () {
+      this.$router.push('/login/register')
     }
   }
 }
 </script>
 
 <style scoped>
-#loginPage{
+#loginPage {
   /*background-image: url("http://localhost:8181/diaowen/images/style-model/login_bg/1.jpg");*/
 }
-.loginFormContent{
+
+.loginFormContent {
   padding: 20px;
   margin-top: 50px;
   background-color: white;
   border: 1px solid gainsboro;
   border-radius: 3px;
-}
-</style>
+}</style>

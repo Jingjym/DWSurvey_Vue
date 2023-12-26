@@ -12,7 +12,9 @@
                 </a>
               </el-col>
               <el-col :span="16">
-                <div style="padding-left: 60px;"><dw-nav-menu></dw-nav-menu></div>
+                <div style="padding-left: 60px;">
+                  <dw-nav-menu></dw-nav-menu>
+                </div>
               </el-col>
               <el-col :span="4" style="text-align: right;" >
                 <div>
