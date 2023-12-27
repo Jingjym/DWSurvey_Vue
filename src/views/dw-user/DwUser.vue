@@ -60,6 +60,7 @@ export default {
       dwUserInfo().then((response) => {
         const resultData = response.data.data
         this.userInfo = resultData
+        this.userInfo.birthday = this.userInfo.birthday.split(' ')[0]
       })
     }
   }

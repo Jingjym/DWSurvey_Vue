@@ -11,7 +11,7 @@
               <div style="padding: 30px;width: 400px;">
                 <el-form ref="ruleForm" :model="ruleForm" :rules="rules" status-icon label-width="100px" label-position="top">
                   <el-form-item label="用户名" prop="userName">
-                    <el-input v-model="ruleForm.userName" autocomplete="off" readonly="true"></el-input>
+                    <el-input v-model="ruleForm.userName" :readonly="true" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="出生年月" prop="birth">
                     <el-date-picker v-model="ruleForm.birth" type="date" placeholder="请选择出生年月"></el-date-picker>
@@ -27,7 +27,7 @@
                   </el-form-item>
                   <el-form-item style="padding-top: 20px;">
                     <el-button type="primary" @click="submitForm('ruleForm')">提交修改</el-button>
-                    <el-button @click="resetForm('ruleForm')">重置</el-button>
+                    <el-button @click="resetForm('ruleForm')">清空信息</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -59,10 +59,6 @@ export default {
         phone: ''
       },
       rules: {
-        userName: [
-          {required: true, message: '请输入用户名', trigger: 'blur'},
-          {min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur'}
-        ],
         sex: [
           {required: true, message: '请填写性别', trigger: 'blur'},
           {type: 'enum', enum: ['男', '女']}
@@ -93,6 +89,7 @@ export default {
         this.ruleForm.phone = this.userInfo.cellphone
         this.ruleForm.sex = this.userInfo.sex === 0 ? '男' : '女'
         this.ruleForm.birth = this.userInfo.birthday.split(' ')[0]
+        this.ruleForm.birth = new Date(this.ruleForm.birth)
         this.ruleForm.email = this.userInfo.email
         this.ruleForm.userName = this.userInfo.loginName
       })
@@ -116,6 +113,7 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
+      this.ruleForm.userName = this.userInfo.loginName
     }
   }
 }
